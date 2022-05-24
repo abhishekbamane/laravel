@@ -134,6 +134,57 @@
                   <span class="app-brand-text demo text-body fw-bolder">Blue Apple</span>
                 </a>
               </div>
+              @if ($message = Session::get('registered'))
+                <div
+                  class="bs-toast toast fade show bg-primary"
+                  role="alert"
+                  aria-live="assertive"
+                  aria-atomic="true"
+                >
+                  <div class="toast-header">
+                    <i class="bx bx-bell me-2"></i>
+                    <div class="me-auto fw-semibold">Success</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                  {{ $message }}
+                  </div>
+                </div>
+              @endif
+              @if ($message = Session::get('loggedout'))
+                <div
+                  class="bs-toast toast fade show bg-primary"
+                  role="alert"
+                  aria-live="assertive"
+                  aria-atomic="true"
+                >
+                  <div class="toast-header">
+                    <i class="bx bx-bell me-2"></i>
+                    <div class="me-auto fw-semibold">Success</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                  {{ $message }}
+                  </div>
+                </div>
+              @endif
+              @if ($message = Session::get('failed'))
+                <div
+                  class="bs-toast toast fade show bg-primary"
+                  role="alert"
+                  aria-live="assertive"
+                  aria-atomic="true"
+                >
+                  <div class="toast-header">
+                    <i class="bx bx-bell me-2"></i>
+                    <div class="me-auto fw-semibold">Error</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                  {{ $message }}
+                  </div>
+                </div>
+              @endif
               <!-- /Logo -->
               <h4 class="mb-2">Welcome to Blue Apple! 👋</h4>
               <p class="mb-4">Please sign-in to your account and start the adventure</p>

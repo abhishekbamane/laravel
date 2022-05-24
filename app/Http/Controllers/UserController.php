@@ -72,20 +72,24 @@ class UserController extends Controller
         $user->name = $name;
         $user->email = $email;
         $user->password = $password;
-        $user->role = 'User';
+        $user->role = 'Admin';
         $user->save();
 
-        return redirect('login');
+        return redirect('login')->with(['registered' => 'Registered successfully.']);
     }
 
     public function allUsers(){
-        $auth = Auth::user();
-        if($auth['role'] == 'Admin'){
-            $users = User::all();
-            $user =  Auth::user();
-            return view('allUsers',['users' => $users, 'user' => $user]);
+        $check = Auth::check();
+        if($check == 1){
+            $auth = Auth::user();
+            if($auth['role'] == 'Admin'){
+                $users = User::all();
+                $user =  Auth::user();
+                return view('allUsers',['users' => $users, 'user' => $user]);
+            }
+            return back()->with(['user' => 'Only Admin can access this.']);
         }
-        return back();
+        return redirect('login')->with(['failed' => 'You need to login first']);
     }
 
     public function editUser(Request $request){
@@ -113,8 +117,12 @@ class UserController extends Controller
     }
 
     public function delete(Request $request){
-        User::where('id', $request->id)->delete();
-        return redirect('allUsers');
+        $id = Auth::id();
+        if($id != $request->id){
+            User::where('id', $request->id)->delete();
+            return redirect('allUsers');
+        }
+        return back()->with(['notDelete' => 'OOPPPSSSS!!!! You cant delete yourself.']);
     }
 
 
@@ -137,6 +145,6 @@ class UserController extends Controller
         ];
         LogActivity::where('id', $request->logoutAt)->update($logoutAt);
         Auth::logout();
-        return redirect('login');
+        return redirect('login')->with(['loggedout' => 'Logged out successfully.']);
     }
 }

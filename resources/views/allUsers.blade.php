@@ -78,6 +78,23 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
+            @if ($message = Session::get('notDelete'))
+              <div
+                  class="bs-toast toast fade show bg-primary"
+                  role="alert"
+                  aria-live="assertive"
+                  aria-atomic="true"
+                >
+                  <div class="toast-header">
+                    <i class="bx bx-bell me-2"></i>
+                    <div class="me-auto fw-semibold">Error</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                  {{ $message }}
+                  </div>
+                </div>
+            @endif
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <div class="row">
